@@ -60,17 +60,6 @@
 }
 
 // TODO: move to separate "utils" class
-- (void)showAlert:(NSString*)message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message"
-                                                      message:message
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-    
-    [alert show];
-}
-
-// TODO: move to separate "utils" class
 - (NSData*)loadImage {
     // TODO: LOADING ASYNCHRONOUS IS A MUST!!! loading animation is also important
     
@@ -86,7 +75,7 @@
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
 
     if([responseCode statusCode] != 200){
-        [self showAlert:[NSString stringWithFormat:@"HTTP error, status code: %li", [responseCode statusCode]]];
+        [Utils showAlert:[NSString stringWithFormat:@"HTTP error, status code: %li", [responseCode statusCode]]];
         return nil;
     }
 

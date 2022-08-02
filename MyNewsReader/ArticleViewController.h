@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "Utils.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ArticleViewController : UIViewController {

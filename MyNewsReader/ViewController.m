@@ -74,17 +74,6 @@
     [_tableView reloadData];
 }
 
-// TODO: move to separate "utils" class
-- (void)showAlert:(NSString*)message {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message"
-                                                      message:message
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-    
-    [alert show];
-}
-
 - (void)reloadNews {
     // Empty the news list, in case it already contained something
     [tableData removeAllObjects];
@@ -94,10 +83,10 @@
     news = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
     
     if(!news) {
-        [self showAlert:@"Error parsing JSON data."];
+        [Utils showAlert:@"Error parsing JSON data."];
         return;
     } else {
-        [self showAlert:news[@"status"]];
+        [Utils showAlert:news[@"status"]];
     }
     
     // Fill the tableView with article titles
@@ -126,7 +115,7 @@
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
 
     if([responseCode statusCode] != 200){
-        [self showAlert:[NSString stringWithFormat:@"HTTP error, status code: %li", [responseCode statusCode]]];
+        [Utils showAlert:[NSString stringWithFormat:@"HTTP error, status code: %li", [responseCode statusCode]]];
         return nil;
     }
 

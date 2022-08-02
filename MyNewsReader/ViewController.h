@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ArticleViewController.h"
+#import "Utils.h"
 
 @interface ViewController : UIViewController {
     NSMutableArray* tableData;
