@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Utils : NSObject
     + (void)showAlert:(NSString*) message;
-    + (NSData*)loadFileFromURL:(NSString*) url;
+    + (NSData*)loadFileByURL:(NSString*) url;
 @end
 
 NS_ASSUME_NONNULL_END

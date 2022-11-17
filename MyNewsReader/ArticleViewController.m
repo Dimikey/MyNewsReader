@@ -52,35 +52,13 @@
     // Image
     //NSLog(@"Attempting to load article image... %@", _currentArticle[@"urlToImage"]);
     if(![_currentArticle[@"urlToImage"] isKindOfClass:[NSNull class]])
-        image = [[UIImage alloc] initWithData:[self loadImage]];
+        image = [[UIImage alloc] initWithData:[Utils loadFileByURL:_currentArticle[@"urlToImage"]]];
     else
         image = [[UIImage alloc] init];
     
     _imageView.image = image;
 }
 
-// TODO: move to separate "utils" class
-- (NSData*)loadImage {
-    // TODO: LOADING ASYNCHRONOUS IS A MUST!!! loading animation is also important
-    
-    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] init];
-    
-    [request setHTTPMethod:@"GET"];
-    [request setURL:[NSURL URLWithString:_currentArticle[@"urlToImage"]]];
-    
-    NSError* error = nil;
-    NSHTTPURLResponse* responseCode = nil;
-    
-    // do request
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-
-    if([responseCode statusCode] != 200){
-        [Utils showAlert:[NSString stringWithFormat:@"HTTP error, status code: %li", [responseCode statusCode]]];
-        return nil;
-    }
-
-    return responseData;
-}
 
 - (IBAction)buttonCloseTouchDown:(id)sender {
     [self dismissModalViewControllerAnimated:YES];

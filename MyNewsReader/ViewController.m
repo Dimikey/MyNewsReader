@@ -10,6 +10,7 @@
 
 #define API_KEY @"eb56197837c44ab2a268e7dfe2dedbb7"
 #define DEFAULT_KEYWORD @"Apple"
+#define JSON_URL @"https://newsapi.org/v2/everything?q=%@&apiKey=%@"
 
 #import "ViewController.h"
 
@@ -79,7 +80,9 @@
     [tableData removeAllObjects];
     
     // Get our JSON
-    NSData* jsonData = [[NSData alloc] initWithData:[self loadJSON]];
+    NSData* jsonData = [[NSData alloc] initWithData:
+                        [Utils loadFileByURL:
+                         [NSString stringWithFormat: JSON_URL, keyword, API_KEY]]];
     news = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
     
     if(!news) {
@@ -99,28 +102,6 @@
     [self updateControls];
 }
 
-// TODO: move to separate "utils" class
-- (NSData*)loadJSON {
-    // TODO: LOADING ASYNCHRONOUS IS A MUST!!! loading animation is also important
-    
-    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] init];
-    
-    [request setHTTPMethod:@"GET"];
-    [request setURL:[NSURL URLWithString: [NSString stringWithFormat:@"https://newsapi.org/v2/everything?q=%@&apiKey=%@", keyword, API_KEY]]];
-    
-    NSError* error = nil;
-    NSHTTPURLResponse* responseCode = nil;
-    
-    // do request
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-
-    if([responseCode statusCode] != 200){
-        [Utils showAlert:[NSString stringWithFormat:@"HTTP error, status code: %li", [responseCode statusCode]]];
-        return nil;
-    }
-
-    return responseData;
-}
 
 // User chooses a news entry
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
