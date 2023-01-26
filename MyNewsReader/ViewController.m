@@ -26,9 +26,6 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
-    /* TODO: handle absent internet connection. Store JSON on device and use it if no connection is present.
-     if its the first time user opens the app, just show empty cells and error message */
-    
     // Prepare default properties
     apiKey = API_KEY;
     keyword = DEFAULT_KEYWORD;
@@ -36,10 +33,12 @@
     [self reloadNews];
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -56,9 +55,11 @@
     return cell;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [tableData count];
 }
+
 
 - (void)updateControls {
     NSNumber* newsCount = [[NSNumber alloc] initWithInteger:0];
@@ -75,18 +76,40 @@
     [_tableView reloadData];
 }
 
+
 - (void)reloadNews {
     // Empty the news list, in case it already contained something
     [tableData removeAllObjects];
+    
+    /* TODO: handle absent internet connection. Store JSON on device and use it if no connection is present.
+     if its the first time user opens the app, just show empty cells and error message */
     
     // Get our JSON
     NSData* jsonData = [[NSData alloc] initWithData:
                         [Utils loadFileByURL:
                          [NSString stringWithFormat: JSON_URL, keyword, API_KEY]]];
+    
+    
+    // Get cache dir
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString* cacheDir = [paths objectAtIndex:0];
+    NSLog(@"Cache dir path: %@", cacheDir);
+    
+    
+    // Save json to file
+    [jsonData writeToFile:[NSString stringWithFormat:@"%@%@", cacheDir, @"/current_news.json"] atomically:TRUE];
+    
+    // Serialize
     news = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
     
+    
     if(!news) {
-        [Utils showAlert:@"Error parsing JSON data."];
+        // No internet connection, or json is bad. We should use our previous saved json
+        // If there's no json to use, then notify our user and show empty list
+        [Utils showAlert:@"No internet connection!"];
+        
+        
+        
         return;
     } else {
         [Utils showAlert:news[@"status"]];
@@ -111,6 +134,7 @@
     [self performSegueWithIdentifier:@"showArticleSegue" sender:self];
 }
 
+
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"showArticleSegue"]) {
         ArticleViewController *controller = (ArticleViewController *)segue.destinationViewController;
@@ -120,12 +144,15 @@
     }
 }
 
+
 - (IBAction)buttonReloadTouchDown:(id)sender {
     [self reloadNews];
 }
 
+
 - (IBAction)textFieldKeywordTriggered:(id)sender {
     
+    // TODO: eliminate white spaces ' '
     // Validate text field
     if(_textFieldKeyword.text.length <= 0) {
         NSLog(@"Keyword is too short, using default");

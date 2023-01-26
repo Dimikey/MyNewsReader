@@ -51,10 +51,22 @@
     // TODO: handle empty pictures. If an article doesn't have an image or no internet connection is present, then show some dummy image
     // Image
     //NSLog(@"Attempting to load article image... %@", _currentArticle[@"urlToImage"]);
-    if(![_currentArticle[@"urlToImage"] isKindOfClass:[NSNull class]])
-        image = [[UIImage alloc] initWithData:[Utils loadFileByURL:_currentArticle[@"urlToImage"]]];
-    else
-        image = [[UIImage alloc] init];
+    if(![_currentArticle[@"urlToImage"] isKindOfClass:[NSNull class]]) {
+        NSData* imageData = [Utils loadFileByURL:_currentArticle[@"urlToImage"]];
+        
+        if(imageData != nil) {
+            image = [[UIImage alloc] initWithData:imageData];
+        }
+        else {
+            // Image failed to load from web, set dummy one
+            image = [UIImage imageNamed:@"DummyImage"];
+        }
+    }
+    else {
+        // No URL was supplied
+        image = [UIImage imageNamed:@"DummyImage"];
+    }
+        
     
     _imageView.image = image;
 }
