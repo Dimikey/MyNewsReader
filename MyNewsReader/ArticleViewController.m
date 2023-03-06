@@ -47,11 +47,12 @@
         _contentLabel.text = _currentArticle[@"content"];
     else
         _contentLabel.text = @"No content";
-        
-    // TODO: handle empty pictures. If an article doesn't have an image or no internet connection is present, then show some dummy image
+
     // Image
     //NSLog(@"Attempting to load article image... %@", _currentArticle[@"urlToImage"]);
     if(![_currentArticle[@"urlToImage"] isKindOfClass:[NSNull class]]) {
+        
+        // TODO: do async
         NSData* imageData = [Utils loadFileByURL:_currentArticle[@"urlToImage"]];
         
         if(imageData != nil) {
@@ -59,15 +60,16 @@
         }
         else {
             // Image failed to load from web, set dummy one
+            NSLog(@"Image load failed");
             image = [UIImage imageNamed:@"DummyImage"];
         }
     }
     else {
         // No URL was supplied
+        NSLog(@"Image url was not supplied");
         image = [UIImage imageNamed:@"DummyImage"];
     }
         
-    
     _imageView.image = image;
 }
 

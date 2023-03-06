@@ -11,6 +11,7 @@
 #define API_KEY @"eb56197837c44ab2a268e7dfe2dedbb7"
 #define DEFAULT_KEYWORD @"Apple"
 #define JSON_URL @"https://newsapi.org/v2/everything?q=%@&apiKey=%@"
+#define KEYWORD_MAX_LEN 30
 
 #import "ViewController.h"
 
@@ -131,6 +132,8 @@
     
     currentArticleId = indexPath.row;
     
+    [_activityIndicator startAnimating];
+    
     [self performSegueWithIdentifier:@"showArticleSegue" sender:self];
 }
 
@@ -152,20 +155,24 @@
 
 - (IBAction)textFieldKeywordTriggered:(id)sender {
     
-    // TODO: eliminate white spaces ' '
     // Validate text field
     if(_textFieldKeyword.text.length <= 0) {
         NSLog(@"Keyword is too short, using default");
         keyword = DEFAULT_KEYWORD;
     }
-    else if (_textFieldKeyword.text.length > 30) {
+    else if (_textFieldKeyword.text.length > KEYWORD_MAX_LEN) {
         NSLog(@"Keyword is too long, using default");
         keyword = DEFAULT_KEYWORD;
     }
-    else
-        keyword = _textFieldKeyword.text;
-    
-    
+    else {
+        // Eliminate spaces (we don't need spaces in our search string)
+        // Tokenize by space " " and take the first string
+        NSArray* tokens = [_textFieldKeyword.text componentsSeparatedByString:@" "];
+        keyword = tokens[0];
+        
+    }
+        
+    NSLog(@"Keyword search string: %@", keyword);
     
     // Dismiss keyboard
     [self.view endEditing:YES];
