@@ -132,8 +132,6 @@
     
     currentArticleId = indexPath.row;
     
-    [_activityIndicator startAnimating];
-    
     [self performSegueWithIdentifier:@"showArticleSegue" sender:self];
 }
 

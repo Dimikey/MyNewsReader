@@ -21,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *labelStatus;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldKeyword;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (IBAction)buttonReloadTouchDown:(id)sender;
 - (IBAction)textFieldKeywordTriggered:(id)sender;

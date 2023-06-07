@@ -55,10 +55,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="s2S-ix-Qsk">
-                                <rect key="frame" x="97" y="30" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="St5-jE-4me"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -82,7 +78,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="mVN-Zy-SFZ"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="s2S-ix-Qsk" id="gDD-G4-mwP"/>
                         <outlet property="labelStatus" destination="fRT-OF-fI9" id="5C4-vX-P7u"/>
                         <outlet property="tableView" destination="g0a-F1-FIM" id="g7B-42-ZxE"/>
                         <outlet property="textFieldKeyword" destination="G9o-br-kMh" id="SvS-eq-kFn"/>
@@ -152,6 +147,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="nsV-nb-LnK">
+                                <rect key="frame" x="177.5" y="159" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GAG-cm-ubP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -165,7 +163,9 @@
                             <constraint firstItem="Uyq-Be-CVQ" firstAttribute="leading" secondItem="GAG-cm-ubP" secondAttribute="leading" constant="16" id="8yB-GF-Fve"/>
                             <constraint firstItem="eJn-YZ-BBF" firstAttribute="top" secondItem="Uyq-Be-CVQ" secondAttribute="bottom" constant="8" id="967-ac-Y68"/>
                             <constraint firstItem="hza-5S-yrF" firstAttribute="leading" secondItem="GAG-cm-ubP" secondAttribute="leading" constant="16" id="AQd-go-FhY"/>
+                            <constraint firstItem="nsV-nb-LnK" firstAttribute="centerX" secondItem="mdQ-fU-gaY" secondAttribute="centerX" id="EqJ-40-Yjd"/>
                             <constraint firstItem="GAG-cm-ubP" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hza-5S-yrF" secondAttribute="trailing" symbolic="YES" id="Q4A-0N-Iog"/>
+                            <constraint firstItem="nsV-nb-LnK" firstAttribute="top" secondItem="hza-5S-yrF" secondAttribute="bottom" constant="78" id="Trn-Kh-38L"/>
                             <constraint firstItem="hza-5S-yrF" firstAttribute="top" secondItem="fxd-Hi-Rwd" secondAttribute="bottom" constant="8" id="WXg-M8-TNz"/>
                             <constraint firstItem="fxd-Hi-Rwd" firstAttribute="top" secondItem="GAG-cm-ubP" secondAttribute="top" id="d4J-wb-UzL"/>
                             <constraint firstItem="PmB-bx-hJY" firstAttribute="top" secondItem="hza-5S-yrF" secondAttribute="bottom" constant="8" id="ddW-XY-SPo"/>
@@ -179,6 +179,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="nsV-nb-LnK" id="fuU-f1-DFx"/>
                         <outlet property="articleTitleLabel" destination="hza-5S-yrF" id="Oca-GB-mNr"/>
                         <outlet property="authorLabel" destination="Uyq-Be-CVQ" id="XqO-Ar-oQG"/>
                         <outlet property="buttonClose" destination="VGQ-ev-brD" id="Rem-a7-Jy0"/>
@@ -190,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HEB-nQ-MNg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1081.875" y="117.5"/>
+            <point key="canvasLocation" x="1080.8" y="117.39130434782609"/>
         </scene>
     </scenes>
     <resources>

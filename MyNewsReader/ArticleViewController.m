@@ -12,6 +12,7 @@
 
 @end
 
+
 @implementation ArticleViewController
 
 - (void)viewDidLoad {
@@ -49,11 +50,32 @@
         _contentLabel.text = @"No content";
 
     // Image
-    //NSLog(@"Attempting to load article image... %@", _currentArticle[@"urlToImage"]);
-    if(![_currentArticle[@"urlToImage"] isKindOfClass:[NSNull class]]) {
+    // Loading image async
+    [NSThread detachNewThreadSelector:@selector(loadImage:) toTarget:self withObject:_currentArticle[@"urlToImage"]];
+
+}
+
+
+- (IBAction)buttonCloseTouchDown:(id)sender {
+    // TODO: replace deprecated
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+
+- (void)loadImage:(NSString*)link {
+    
+
+    // TODO: implement image setting from main thread (as xcode insists)
+    
+    // TODO: migrate to GCD
+    
+    // TODO: handle loading animation
+    //_activityIndicator.hidesWhenStopped = YES;
+    //[_activityIndicator startAnimating];
+    
+    if(![link isKindOfClass:[NSNull class]]) {
         
-        // TODO: do async
-        NSData* imageData = [Utils loadFileByURL:_currentArticle[@"urlToImage"]];
+        NSData* imageData = [Utils loadFileByURL:link];
         
         if(imageData != nil) {
             image = [[UIImage alloc] initWithData:imageData];
@@ -71,12 +93,10 @@
     }
         
     _imageView.image = image;
+    
+    //[_activityIndicator stopAnimating];
 }
 
-
-- (IBAction)buttonCloseTouchDown:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
-}
 
 /*
 #pragma mark - Navigation

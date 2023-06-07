@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ArticleViewController : UIViewController {
     UIImage* image;
-    
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *buttonClose;
@@ -25,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) NSDictionary* currentArticle;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+- (void) loadImage:(NSString*)link;
 
 @end
 
