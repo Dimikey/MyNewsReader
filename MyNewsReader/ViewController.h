@@ -19,7 +19,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *labelStatus;
+//@property (weak, nonatomic) IBOutlet UILabel *labelStatus;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldKeyword;
 
 - (IBAction)buttonReloadTouchDown:(id)sender;

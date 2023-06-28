@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) NSDictionary* currentArticle;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-- (void) loadImage:(NSString*)link;
+- (void) updateImageView;
 
 @end
 

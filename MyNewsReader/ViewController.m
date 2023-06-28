@@ -72,7 +72,7 @@
         newsCount = [[NSNumber alloc] initWithInteger:-1];
     }
     
-    _labelStatus.text = [NSString stringWithFormat: @"News: %@", newsCount];
+    //_labelStatus.text = [NSString stringWithFormat: @"News: %@", newsCount];
     
     [_tableView reloadData];
 }
@@ -91,6 +91,8 @@
                          [NSString stringWithFormat: JSON_URL, keyword, API_KEY]]];
     
     
+    
+    /*
     // Get cache dir
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* cacheDir = [paths objectAtIndex:0];
@@ -99,6 +101,7 @@
     
     // Save json to file
     [jsonData writeToFile:[NSString stringWithFormat:@"%@%@", cacheDir, @"/current_news.json"] atomically:TRUE];
+    */
     
     // Serialize
     news = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
@@ -108,8 +111,6 @@
         // No internet connection, or json is bad. We should use our previous saved json
         // If there's no json to use, then notify our user and show empty list
         [Utils showAlert:@"No internet connection!"];
-        
-        
         
         return;
     } else {

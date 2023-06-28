@@ -51,8 +51,43 @@
 
     // Image
     // Loading image async
-    [NSThread detachNewThreadSelector:@selector(loadImage:) toTarget:self withObject:_currentArticle[@"urlToImage"]];
+    //[NSThread detachNewThreadSelector:@selector(loadImage:) toTarget:self withObject:_currentArticle[@"urlToImage"]];
+    [_activityIndicator startAnimating];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"image download thread start");
+        if(![_currentArticle[@"urlToImage"] isKindOfClass:[NSNull class]]) {
+            
+            NSData* imageData = [Utils loadFileByURL:_currentArticle[@"urlToImage"]];
+            
+            if(imageData != nil) {
+                image = [[UIImage alloc] initWithData:imageData];
+            }
+            else {
+                // Image failed to load from web, set dummy one
+                NSLog(@"Image load failed");
+                image = [UIImage imageNamed:@"DummyImage"];
+            }
+        }
+        else {
+            // No URL was supplied
+            NSLog(@"Image url was not supplied");
+            image = [UIImage imageNamed:@"DummyImage"];
+        }
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"updateImageView thread start");
+            [self updateImageView];
+            [_activityIndicator stopAnimating];
+            NSLog(@"updateImageView thread end");
+        });
+        
+        NSLog(@"image download thread end");
+    });
+}
 
+- (void) updateImageView {
+        _imageView.image = image;
 }
 
 
@@ -62,40 +97,6 @@
 }
 
 
-- (void)loadImage:(NSString*)link {
-    
-
-    // TODO: implement image setting from main thread (as xcode insists)
-    
-    // TODO: migrate to GCD
-    
-    // TODO: handle loading animation
-    //_activityIndicator.hidesWhenStopped = YES;
-    //[_activityIndicator startAnimating];
-    
-    if(![link isKindOfClass:[NSNull class]]) {
-        
-        NSData* imageData = [Utils loadFileByURL:link];
-        
-        if(imageData != nil) {
-            image = [[UIImage alloc] initWithData:imageData];
-        }
-        else {
-            // Image failed to load from web, set dummy one
-            NSLog(@"Image load failed");
-            image = [UIImage imageNamed:@"DummyImage"];
-        }
-    }
-    else {
-        // No URL was supplied
-        NSLog(@"Image url was not supplied");
-        image = [UIImage imageNamed:@"DummyImage"];
-    }
-        
-    _imageView.image = image;
-    
-    //[_activityIndicator stopAnimating];
-}
 
 
 /*
